@@ -492,8 +492,8 @@ nav li {
 #bouton-supprimer {
 	display: flex;
 	position: absolute;
-	height: 25px;
-	width: 25px;
+	height: 17px;
+	width: 17px;
 	padding: 5px 0px;
 	border: none;
 	color: white;
@@ -504,7 +504,15 @@ nav li {
 	align-items: center;
 	border-radius: 5px;
 }
-
+#bouton-supprimer i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 7px;
+	width: 7px;
+	margin: 0px 0px;
+	
+}
 
 #galleryModal figure .boutons-modal i {
 	height: 17px;
@@ -563,6 +571,30 @@ nav li {
 	border-radius: 10px;
 	position: relative;
 }
+#modal2 .bouton-precedent{
+	color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 8px;
+	top: 18px;
+	height: 25px;
+	width: 25px;
+	position: absolute;
+	border: none;
+	background: white;
+}
+#modal2 .bouton-precedent i {
+
+	height: 25px;
+	width: 25px;
+
+}
+#modal2 .bouton-precedent:hover {
+
+	transform: scale(1.30);
+
+}
 
 #modal2 .bouton-fermer2 {
 	color: black;
@@ -582,6 +614,11 @@ nav li {
 
 	height: 25px;
 	width: 25px;
+
+}
+#modal2 .bouton-fermer2:hover {
+
+	transform: scale(1.30);
 
 }
 

@@ -253,3 +253,14 @@ boutonsFermerModal2.forEach(bouton => {
   bouton.addEventListener('click', closeModal2);
 });
 
+//**************** fonction précedent **********
+
+const boutonPrecedent = document.querySelector('.bouton-precedent');
+
+function retourModal1() {
+  fenetreModal1.style.display = 'flex';
+  fenetreModal2.style.display = 'none';
+
+}
+
+boutonPrecedent.addEventListener('click', retourModal1);
