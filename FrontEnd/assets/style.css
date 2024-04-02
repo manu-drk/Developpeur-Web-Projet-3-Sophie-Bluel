@@ -192,7 +192,7 @@ body {
 }
 
 section {
-	margin: 50px 0
+	margin: 100px 0
 }
 
 h1 {
@@ -230,7 +230,10 @@ nav li {
 	font-size: 1.2em;
 }
 
-
+/* .mentions {
+	padding: 0 10px;
+	font-size: 1.2em;
+} */
 
 #introduction {
 	display: flex;
@@ -332,7 +335,7 @@ nav li {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 30px;
+	margin-bottom: 90px;
 }
 
 #sectionProjet h2,
@@ -385,8 +388,8 @@ nav li {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	right: 8px;
-	top: 18px;
+	right: 15px;
+	top: 26px;
 	height: 25px;
 	width: 25px;
 	position: absolute;
@@ -576,8 +579,8 @@ nav li {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left: 8px;
-	top: 18px;
+	left: 15px;
+	top: 26px;
 	height: 25px;
 	width: 25px;
 	position: absolute;
@@ -601,8 +604,8 @@ nav li {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	right: 8px;
-	top: 18px;
+	right: 15px;
+	top: 26px;
 	height: 25px;
 	width: 25px;
 	position: absolute;
@@ -672,7 +675,11 @@ label[for="input-photo"] {
 	margin-top: 10px;
 	font-size: 10px;
 }
+#image-preview {
+	height: 100px;
+	width: 80px;
 
+}
 #modal2 .bouton-valider {
 	font-family: 'Syne';
 	font-weight: 700;
@@ -723,7 +730,10 @@ label[for="input-photo"] {
 	width: 50%;
 	margin: auto;
 }
-
+#connexion {
+	padding-top: 100px;
+	padding-bottom: 180px;
+}
 #contact>*,
 #connexion>* {
 	text-align: center;

@@ -253,6 +253,23 @@ boutonsFermerModal2.forEach(bouton => {
   bouton.addEventListener('click', closeModal2);
 });
 
+//****** Fonction pour fermer les modales lors du clic  en dehors de la modale
+function closeModalOutside(e) {
+  // Vérifification si clique sur l'arrière-plan de la modal
+  if (e.target === fenetreModal1 || e.target === fenetreModal2) {
+      closeModal1(e); 
+      closeModal2(e); 
+  }
+}
+
+// Gestionnaire d'événements pour le clic à l'extérieur de la modal
+fenetreModal1.addEventListener('click', closeModalOutside);
+fenetreModal2.addEventListener('click', closeModalOutside);
+
+
+
+
+
 //**************** fonction précedent **********
 
 const boutonPrecedent = document.querySelector('.bouton-precedent');
@@ -264,3 +281,117 @@ function retourModal1() {
 }
 
 boutonPrecedent.addEventListener('click', retourModal1);
+
+
+
+
+
+//********************** Ajoute selection des catégories *****************
+
+// Sélection de l'élément de formulaire pour les catégories
+const categorieSelect = document.getElementById('categorie');
+
+// Fonction pour ajouter les options de catégorie dans le formulaire
+function formCategories(categories) {
+    // Supprimer les options existantes
+    categorieSelect.innerHTML = '';
+
+    // Recherche dans les catégories déjà importé de l'API
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name; 
+        categorieSelect.appendChild(option);
+    });
+}
+formCategories(categories);
+
+// ************** Ajout de l'imagne en miniature  ******************
+
+
+const inputPhoto = document.getElementById("input-photo");
+
+// Sélection des éléments HTML à masquer
+const logoAjoutElement = document.querySelector('.logoAjout');
+const labelAjoutElement = document.getElementById('custom-file-upload');
+const paragrapheElement = document.querySelector('#modal2 p');
+
+// Sélection de l'image
+const imagePreview = document.getElementById("image-preview");
+
+// Ajouter d'événements 
+inputPhoto.addEventListener("change", function() {
+    // Vérifier si des fichiers ont été sélectionnés
+    if (inputPhoto.files && inputPhoto.files[0]) {
+        // Créer un objet URL pour l'image sélectionnée
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Afficher l'image dans l'élément de prévisualisation
+            imagePreview.src = e.target.result;
+            // Afficher l'élément de prévisualisation
+            imagePreview.style.display = "block"; 
+
+            // Masquer les autres éléments HTML
+            logoAjoutElement.style.display = "none";
+            labelAjoutElement.style.display = "none";
+            paragrapheElement.style.display = "none";
+        }
+
+        
+        reader.readAsDataURL(inputPhoto.files[0]);
+    }
+});
+
+
+//***********************************************
+
+// Sélectionner l'élément de formulaire par son ID
+const formElement = document.getElementById("ajout-form");
+
+// Ajouter un gestionnaire d'événements pour la soumission du formulaire
+formElement.addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+
+    const formData = new FormData(formElement); // Récupérer les données du formulaire
+
+    // Récupérer le token d'authentification depuis le localStorage
+    const token = localStorage.getItem("token");
+
+    // Vérifier si le token est présent
+    if (!token) {
+        alert("Vous devez vous connecter pour effectuer cette action.");
+        return; // Arrêter l'exécution de la fonction si le token est absent
+    }
+
+    // Créer les en-têtes (headers) de la requête avec le token d'authentification
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+
+    // Effectuer une requête Ajax pour envoyer les données au serveur
+    fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData,
+        headers: headers // Ajouter les en-têtes à la requête
+    })
+    .then(response => {
+        if (response.ok) {
+            // Gérer la réponse du serveur si nécessaire
+            console.log("Image ajoutée avec succès !");
+            // Réinitialiser le formulaire après l'envoi des données
+            formElement.reset();
+            // Réinitialiser l'aperçu de l'image
+            document.getElementById("image-preview").src = "#";
+            document.getElementById("image-preview").style.display = "none";
+            // Réafficher les éléments masqués
+            document.querySelector('.logoAjout').style.display = "block";
+            document.getElementById('custom-file-upload').style.display = "block";
+            document.querySelector('#modal2 p').style.display = "block";
+        } else {
+            throw new Error("Erreur lors de l'ajout de l'image.");
+        }
+    })
+    .catch(error => {
+        console.error("Erreur:", error);
+    });
+});
