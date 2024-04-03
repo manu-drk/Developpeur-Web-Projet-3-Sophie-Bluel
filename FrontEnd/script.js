@@ -174,7 +174,7 @@ function afficherModal(modal) {
 // Fonction pour afficher la modal 1 et cacher la modal 2
 function afficherModal1(e) {
   e.preventDefault();
-  fenetreModal2.style.display = 'none';
+  fenetreModal2.style.display = 'none';// modale2.classList.add("off")
   afficherModal(fenetreModal1);
   genererListeModal(works, fenetreModal1); // Générer la liste dans la modal 1
 }
@@ -363,7 +363,7 @@ boutonValider.addEventListener("click", async function(event) {
     // Créer un objet FormData pour envoyer les données
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("categoryId", categoryId); 
+    formData.append("category", categoryId); 
     formData.append("image", imageFile);
 
     // Récupérer le token d'authentification depuis le localStorage
@@ -404,5 +404,6 @@ boutonValider.addEventListener("click", async function(event) {
         }
     } catch (error) {
         console.error("Erreur:", error);
+        alert("alerte")
     }
 });
