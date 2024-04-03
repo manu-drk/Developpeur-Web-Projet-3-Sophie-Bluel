@@ -297,10 +297,10 @@ function formCategories(categories) {
     categorieSelect.innerHTML = '';
 
     // Recherche dans les catégories déjà importé de l'API
-    categories.forEach(category => {
+    categories.forEach(categories => {
         const option = document.createElement('option');
-        option.value = category.id;
-        option.textContent = category.name; 
+        option.value = categories.id;
+        option.textContent = categories.name; 
         categorieSelect.appendChild(option);
     });
 }
@@ -363,7 +363,7 @@ boutonValider.addEventListener("click", async function(event) {
     // Créer un objet FormData pour envoyer les données
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("categoryId", categoryId); /
+    formData.append("categoryId", categoryId); 
     formData.append("image", imageFile);
 
     // Récupérer le token d'authentification depuis le localStorage
