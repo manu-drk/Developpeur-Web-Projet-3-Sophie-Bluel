@@ -344,23 +344,34 @@ inputPhoto.addEventListener("change", function() {
 });
 
 
-//***********************************************
+// //***********************************************
 
-// Sélectionner l'élément de formulaire par son ID
-const formElement = document.getElementById("ajout-form");
 
-// Ajouter un gestionnaire d'événements pour la soumission du formulaire
-formElement.addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+//********************************** Post du nouveau projet *****************
+// Sélectionner le bouton de validation par son ID
+const boutonValider = document.getElementById("valider-ajout-modal");
 
-    const formData = new FormData(formElement); // Récupérer les données du formulaire
+// Ajouter un gestionnaire d'événements pour le clic sur le bouton de validation
+boutonValider.addEventListener("click", async function(event) {
+    event.preventDefault(); 
+
+    // Récupérer les valeurs saisies dans le formulaire
+    const title = document.getElementById("title-texte").value;
+    const categoryId = document.getElementById("categorie").value;
+    const imageFile = document.getElementById("input-photo").files[0]; 
+
+    // Créer un objet FormData pour envoyer les données
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("categoryId", categoryId); /
+    formData.append("image", imageFile);
 
     // Récupérer le token d'authentification depuis le localStorage
     const token = localStorage.getItem("token");
 
     // Vérifier si le token est présent
     if (!token) {
-        alert("Vous devez vous connecter pour effectuer cette action.");
+        alert("Vous devez être connecté.");
         return; // Arrêter l'exécution de la fonction si le token est absent
     }
 
@@ -368,18 +379,19 @@ formElement.addEventListener("submit", function(event) {
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
 
-    // Effectuer une requête Ajax pour envoyer les données au serveur
-    fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        body: formData,
-        headers: headers // Ajouter les en-têtes à la requête
-    })
-    .then(response => {
+    try {
+        // Effectue une requêtepour envoyer les données au serveur
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            body: formData,
+            headers: headers 
+        });
+
         if (response.ok) {
             // Gérer la réponse du serveur si nécessaire
             console.log("Image ajoutée avec succès !");
-            // Réinitialiser le formulaire après l'envoi des données
-            formElement.reset();
+            // Réinitialiser le formulaire 
+            document.getElementById("ajout-form").reset();
             // Réinitialiser l'aperçu de l'image
             document.getElementById("image-preview").src = "#";
             document.getElementById("image-preview").style.display = "none";
@@ -390,8 +402,7 @@ formElement.addEventListener("submit", function(event) {
         } else {
             throw new Error("Erreur lors de l'ajout de l'image.");
         }
-    })
-    .catch(error => {
+    } catch (error) {
         console.error("Erreur:", error);
-    });
+    }
 });
