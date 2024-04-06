@@ -26,7 +26,7 @@ const displayWorks = (filtered = []) => {
         
         <figure data-id="${work.categoryId}">
         <img src="${work.imageUrl}" alt="${work.title}">
-        <figcaption>${work.title}"</figcaption>
+        <figcaption>${work.title}</figcaption>
         </figure>
     
         `;
@@ -227,7 +227,73 @@ function genererListeModal(works, modal) {
     divBoutons.appendChild(boutonSupprimer);
 
   });
+
+//******************************** Suppression du projet *********************************
+
+// Gestionnaire d'événements pour les boutons 'bouton-supprimer'
+
+    // Gestionnaire d'événements pour les boutons 'bouton-supprimer'
+    const boutonsSupprimer = modal.querySelectorAll('#bouton-supprimer');
+    boutonsSupprimer.forEach(bouton => {
+        bouton.addEventListener('click', handleSuppression);
+    });
 }
+
+
+async function handleSuppression(event) {
+  // Demande de confirmation 
+  const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+  if (confirmation) {
+      // Récupérer l'ID de l'élément à supprimer
+      const workId = event.target.closest('figure').dataset.id;
+      try {
+          // Récupérer le token d'authentification depuis le localStorage
+          const token = localStorage.getItem("token");
+
+          // Vérifier si le token est présent
+          if (!token) {
+              alert("Vous devez être connecté.");
+              return; // Arrêter l'exécution de la fonction si le token est absent
+          }
+
+          // Créer les en-têtes (headers) de la requête avec le token d'authentification
+          const headers = new Headers();
+          headers.append("Authorization", `Bearer ${token}`);
+
+          // Effectuer la requête DELETE pour supprimer l'élément
+          const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+              method: 'DELETE',
+              headers: headers
+          });
+
+          if (response.ok) {
+              // Supprimer l'élément de la galerie
+              const figureModal = event.target.closest('figure');
+              if (figureModal) {
+                  figureModal.parentNode.removeChild(figureModal);
+              }
+              
+              alert("L'élément a été supprimé avec succès !");
+          } else {
+              throw new Error("Erreur lors de la suppression de l'élément.");
+          }
+      } catch (error) {
+          console.error("Erreur:", error);
+          alert("Une erreur s'est produite lors de la suppression de l'élément.");
+      }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -345,11 +411,32 @@ inputPhoto.addEventListener("change", function() {
 
 
 // //***********************************************
+// Sélectionner les éléments du formulaire
+const titleInput = document.getElementById("title-texte");
+const categorySelect = document.getElementById("categorie");
+const photoInput = document.getElementById("input-photo");
+const boutonValider = document.getElementById("valider-ajout-modal");
 
+// Fonction pour vérifier si le bouton Valider doit être activé
+function verifierConditions() {
+    const titreValide = titleInput.value.trim() !== '';
+    const categorieChoisie = categorySelect.value !== '';
+    const photoInseree = photoInput.files.length > 0;
+
+    boutonValider.disabled = !(titreValide && categorieChoisie && photoInseree);
+    boutonValider.classList.toggle('valide', (titreValide && categorieChoisie && photoInseree));
+}
+
+// Ajouter des écouteurs d'événements pour les changements dans les éléments du formulaire
+titleInput.addEventListener("input", verifierConditions);
+categorySelect.addEventListener("change", verifierConditions);
+photoInput.addEventListener("change", verifierConditions);
+
+// Appeler la fonction une première fois pour initialiser l'état du bouton Valider
+verifierConditions();
 
 //********************************** Post du nouveau projet *****************
-// Sélectionner le bouton de validation par son ID
-const boutonValider = document.getElementById("valider-ajout-modal");
+
 
 // Ajouter un gestionnaire d'événements pour le clic sur le bouton de validation
 boutonValider.addEventListener("click", async function(event) {
@@ -360,6 +447,10 @@ boutonValider.addEventListener("click", async function(event) {
     const categoryId = document.getElementById("categorie").value;
     const imageFile = document.getElementById("input-photo").files[0]; 
 
+    if (!title.trim()) {
+      alert("Veuillez entrer un titre.");
+      return; // Arrêter l'exécution de la fonction si le titre est vide
+  }
     // Créer un objet FormData pour envoyer les données
     const formData = new FormData();
     formData.append("title", title);
