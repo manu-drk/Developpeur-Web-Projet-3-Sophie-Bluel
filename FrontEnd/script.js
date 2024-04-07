@@ -41,7 +41,7 @@ const tousLesTavaux = {
   name: 'Tous',
 }
 
-// **************   ajouter le bouton en début de tableau     ***********
+//**********      ajouter le bouton en début de tableau     ***********
 categories.unshift(tousLesTavaux);
 if (!token) {
   categories.forEach(function (categorie) {
@@ -56,7 +56,7 @@ if (!token) {
   })
 
 
-  // ******************** ajout de la partie filtre      **************
+  //**********      Ajout de la partie filtre      **********
 
 
   const boutonsFiltre = document.querySelectorAll('.boutonFiltre');
@@ -65,15 +65,24 @@ if (!token) {
       const filtreId = button.dataset.id;
       const filtered = filtreId == 0 ? works : works.filter(work => work.category.id == filtreId);
       displayWorks(filtered);
-    })
-  })
+  
+      // Ajoute la classe "selected" au bouton actuellement sélectionné
+      boutonsFiltre.forEach(btn => {
+        if (btn === button) {
+          btn.classList.add('selected');
+        } else {
+          btn.classList.remove('selected');
+        }
+      });
+    });
+  });
 }
-// ****************    texte "login" en "logout" si l'utilisateur est connecté **************
+//**********      texte "login" en "logout" si l'utilisateur est connecté      **********
 
 function login(token) {
   if (token) {
     document.getElementById("bouton_login").innerText = "logout";
-    // logout.href = './index.html';
+
   } else {
     document.getElementById("bouton_login").innerText = "login";
   }
@@ -84,7 +93,7 @@ login(token);
 
 
 
-//************ Fonction de déconnexion ************
+//**********      Fonction de déconnexion      **********
 
 function deco() {
   // Supprimer le token
@@ -127,10 +136,6 @@ logoutButton.addEventListener("click", function (event) {
   }
 });
 
-
-
-
-
 // Afficher la topbar si l'utilisateur est connecté
 
 if (token) {
@@ -156,9 +161,7 @@ if (token) {
 }
 
 
-// ******************************      Modals      ******************************
-
-
+// **********      Partie Modals      **********
 
 // Définition des modales
 const fenetreModal1 = document.querySelector('.modalEcran');
@@ -187,10 +190,48 @@ function afficherModal2(e) {
 }
 
 
+//**********      Modal 2      **********
+
+// Code HTML de la modal2
+const modal2HTML = `
+<div id="modal2">
+    <button class="bouton-precedent"><i class="fa-solid fa-arrow-left"></i></button>
+    <button class="bouton-fermer2"><i class="fa-solid fa-xmark"></i></button>
+    <h1>Ajout photo</h1>
+    <div id="preview" class="hidden"></div>
+    <div class="fenetre-ajout">
+        <input class="hidden" type="file" id="input-photo" accept="image/jpeg, image/png" name='image' />
+        <div class="logoAjout">
+            <i class="fa-regular fa-image" style="color: #B9C5CC;"></i>
+        </div>
+        <label for="input-photo" id="custom-file-upload">+ Ajouter Photo</label>
+        <p>jpg, png : 4mo max</p>
+        <img id="image-preview" src="#" alt="Aperçu de l'image" style="display: none;">
+    </div>
+    <div id="ajoutModal">
+        <form id='ajout-form' action="#">
+            <label for="title-texte">Titre</label>
+            <input type="text" id="title-texte" name='title' />
+            <label for="categorie">Catégorie</label>
+            <select name="category" id="categorie"></select>
+            <hr>
+            <input id="valider-ajout-modal" class="bouton-valider" type="submit" value="Valider">
+        </form>
+    </div>
+</div>`;
+
+// Sélection de la div modalForm
+const modalForm = document.querySelector('.modalForm');
+
+// Insertion de la modal2 dans la modalForm
+modalForm.innerHTML = modal2HTML;
+
+//**********      Ouverture des modals      **********
 
 // Gestionnaires d'événements pour ouvrir les modales
 const boutonOuvrirModal1 = document.querySelector('#bouton-ouvrir-modal1');
-boutonOuvrirModal1.addEventListener('click', afficherModal1);
+if (token) {boutonOuvrirModal1.addEventListener('click', afficherModal1);
+}
 
 const boutonOuvrirModal2 = document.querySelector('#bouton-ouvrir-modal2');
 boutonOuvrirModal2.addEventListener('click', afficherModal2);
@@ -202,7 +243,7 @@ boutonAjouter.addEventListener('click', afficherModal2); // Ouvre la modal 2
 
 
 
-//********** Fonction pour générer la liste d'éléments dans une modal **********
+//**********      Fonction pour générer la liste d'éléments dans une modal      **********
 function genererListeModal(works, modal) {
   const modalGallery = modal.querySelector('#galleryModal');
   modalGallery.innerHTML = '';
@@ -228,15 +269,15 @@ function genererListeModal(works, modal) {
 
   });
 
-//******************************** Suppression du projet *********************************
+  //**********      Suppression du projet      **********
 
-// Gestionnaire d'événements pour les boutons 'bouton-supprimer'
+  // Gestionnaire d'événements pour les boutons 'bouton-supprimer'
 
-    // Gestionnaire d'événements pour les boutons 'bouton-supprimer'
-    const boutonsSupprimer = modal.querySelectorAll('#bouton-supprimer');
-    boutonsSupprimer.forEach(bouton => {
-        bouton.addEventListener('click', handleSuppression);
-    });
+  // Gestionnaire d'événements pour les boutons 'bouton-supprimer'
+  const boutonsSupprimer = modal.querySelectorAll('#bouton-supprimer');
+  boutonsSupprimer.forEach(bouton => {
+    bouton.addEventListener('click', handleSuppression);
+  });
 }
 
 
@@ -244,60 +285,50 @@ async function handleSuppression(event) {
   // Demande de confirmation 
   const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
   if (confirmation) {
-      // Récupérer l'ID de l'élément à supprimer
-      const workId = event.target.closest('figure').dataset.id;
-      try {
-          // Récupérer le token d'authentification depuis le localStorage
-          const token = localStorage.getItem("token");
+    // Récupérer l'ID de l'élément à supprimer
+    const workId = event.target.closest('figure').dataset.id;
+    try {
+      // Récupérer le token d'authentification depuis le localStorage
+      const token = localStorage.getItem("token");
 
-          // Vérifier si le token est présent
-          if (!token) {
-              alert("Vous devez être connecté.");
-              return; // Arrêter l'exécution de la fonction si le token est absent
-          }
+      // Vérifier si le token est présent
+      if (!token) {
 
-          // Créer les en-têtes (headers) de la requête avec le token d'authentification
-          const headers = new Headers();
-          headers.append("Authorization", `Bearer ${token}`);
-
-          // Effectuer la requête DELETE pour supprimer l'élément
-          const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
-              method: 'DELETE',
-              headers: headers
-          });
-
-          if (response.ok) {
-              // Supprimer l'élément de la galerie
-              const figureModal = event.target.closest('figure');
-              if (figureModal) {
-                  figureModal.parentNode.removeChild(figureModal);
-              }
-              
-              alert("L'élément a été supprimé avec succès !");
-          } else {
-              throw new Error("Erreur lors de la suppression de l'élément.");
-          }
-      } catch (error) {
-          console.error("Erreur:", error);
-          alert("Une erreur s'est produite lors de la suppression de l'élément.");
+        alert("Vous devez être connecté.");
+        return; // Arrêter l'exécution de la fonction si le token est absent
       }
+
+      // Créer les en-têtes (headers) de la requête avec le token d'authentification
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${token}`);
+
+      // Effectuer la requête DELETE pour supprimer l'élément
+      const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+        method: 'DELETE',
+        headers: headers
+      });
+
+      if (response.ok) {
+        // Supprimer l'élément de la galerie
+        const figureModal = event.target.closest('figure');
+        if (figureModal) {
+          figureModal.parentNode.removeChild(figureModal);
+        }
+
+        alert("L'élément a été supprimé avec succès !");
+      } else {
+        throw new Error("Erreur lors de la suppression de l'élément.");
+      }
+    } catch (error) {
+      console.error("Erreur:", error);
+      alert("Une erreur s'est produite lors de la suppression de l'élément.");
+    }
   }
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-//********** Fonction pour fermer les modales **********
+//**********      Fonction pour fermer les modales      **********
 function closeModal1(e) {
   e.preventDefault();
   fenetreModal1.style.display = 'none';
@@ -319,12 +350,12 @@ boutonsFermerModal2.forEach(bouton => {
   bouton.addEventListener('click', closeModal2);
 });
 
-//****** Fonction pour fermer les modales lors du clic  en dehors de la modale
+//**********      Fonction pour fermer les modales lors du clic  en dehors de la modale
 function closeModalOutside(e) {
   // Vérifification si clique sur l'arrière-plan de la modal
   if (e.target === fenetreModal1 || e.target === fenetreModal2) {
-      closeModal1(e); 
-      closeModal2(e); 
+    closeModal1(e);
+    closeModal2(e);
   }
 }
 
@@ -334,9 +365,7 @@ fenetreModal2.addEventListener('click', closeModalOutside);
 
 
 
-
-
-//**************** fonction précedent **********
+//**********      fonction précedent      **********
 
 const boutonPrecedent = document.querySelector('.bouton-precedent');
 
@@ -350,29 +379,29 @@ boutonPrecedent.addEventListener('click', retourModal1);
 
 
 
-
-
-//********************** Ajoute selection des catégories *****************
+//**********      Ajoute selection des catégories      **********
 
 // Sélection de l'élément de formulaire pour les catégories
 const categorieSelect = document.getElementById('categorie');
 
 // Fonction pour ajouter les options de catégorie dans le formulaire
 function formCategories(categories) {
-    // Supprimer les options existantes
-    categorieSelect.innerHTML = '';
+  // Supprimer les options existantes
+  categorieSelect.innerHTML = '';
 
-    // Recherche dans les catégories déjà importé de l'API
-    categories.forEach(categories => {
-        const option = document.createElement('option');
-        option.value = categories.id;
-        option.textContent = categories.name; 
-        categorieSelect.appendChild(option);
-    });
+  const filteredCategories = categories.filter(category => category.id !== 0);
+
+  // Ajouter les options des catégories restantes dans le formulaire
+  filteredCategories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category.id;
+    option.textContent = category.name;
+    categorieSelect.appendChild(option);
+  });
 }
 formCategories(categories);
 
-// ************** Ajout de l'imagne en miniature  ******************
+//**********      Ajout de l'imagne en miniature      **********
 
 
 const inputPhoto = document.getElementById("input-photo");
@@ -386,31 +415,31 @@ const paragrapheElement = document.querySelector('#modal2 p');
 const imagePreview = document.getElementById("image-preview");
 
 // Ajouter d'événements 
-inputPhoto.addEventListener("change", function() {
-    // Vérifier si des fichiers ont été sélectionnés
-    if (inputPhoto.files && inputPhoto.files[0]) {
-        // Créer un objet URL pour l'image sélectionnée
-        const reader = new FileReader();
+inputPhoto.addEventListener("change", function () {
+  // Vérifier si des fichiers ont été sélectionnés
+  if (inputPhoto.files && inputPhoto.files[0]) {
+    // Créer un objet URL pour l'image sélectionnée
+    const reader = new FileReader();
 
-        reader.onload = function(e) {
-            // Afficher l'image dans l'élément de prévisualisation
-            imagePreview.src = e.target.result;
-            // Afficher l'élément de prévisualisation
-            imagePreview.style.display = "block"; 
+    reader.onload = function (e) {
+      // Afficher l'image dans l'élément de prévisualisation
+      imagePreview.src = e.target.result;
+      // Afficher l'élément de prévisualisation
+      imagePreview.style.display = "block";
 
-            // Masquer les autres éléments HTML
-            logoAjoutElement.style.display = "none";
-            labelAjoutElement.style.display = "none";
-            paragrapheElement.style.display = "none";
-        }
-
-        
-        reader.readAsDataURL(inputPhoto.files[0]);
+      // Masquer les autres éléments HTML
+      logoAjoutElement.style.display = "none";
+      labelAjoutElement.style.display = "none";
+      paragrapheElement.style.display = "none";
     }
+
+
+    reader.readAsDataURL(inputPhoto.files[0]);
+  }
 });
 
 
-// //***********************************************
+//**********      Condition des informations pour valider      **********
 // Sélectionner les éléments du formulaire
 const titleInput = document.getElementById("title-texte");
 const categorySelect = document.getElementById("categorie");
@@ -419,12 +448,12 @@ const boutonValider = document.getElementById("valider-ajout-modal");
 
 // Fonction pour vérifier si le bouton Valider doit être activé
 function verifierConditions() {
-    const titreValide = titleInput.value.trim() !== '';
-    const categorieChoisie = categorySelect.value !== '';
-    const photoInseree = photoInput.files.length > 0;
+  const titreValide = titleInput.value.trim() !== '';
+  const categorieChoisie = categorySelect.value !== '';
+  const photoInseree = photoInput.files.length > 0;
 
-    boutonValider.disabled = !(titreValide && categorieChoisie && photoInseree);
-    boutonValider.classList.toggle('valide', (titreValide && categorieChoisie && photoInseree));
+  boutonValider.disabled = !(titreValide && categorieChoisie && photoInseree);
+  boutonValider.classList.toggle('valide', (titreValide && categorieChoisie && photoInseree));
 }
 
 // Ajouter des écouteurs d'événements pour les changements dans les éléments du formulaire
@@ -435,66 +464,66 @@ photoInput.addEventListener("change", verifierConditions);
 // Appeler la fonction une première fois pour initialiser l'état du bouton Valider
 verifierConditions();
 
-//********************************** Post du nouveau projet *****************
+//**********      Post du nouveau projet      **********
 
 
 // Ajouter un gestionnaire d'événements pour le clic sur le bouton de validation
-boutonValider.addEventListener("click", async function(event) {
-    event.preventDefault(); 
+boutonValider.addEventListener("click", async function (event) {
+  event.preventDefault();
 
-    // Récupérer les valeurs saisies dans le formulaire
-    const title = document.getElementById("title-texte").value;
-    const categoryId = document.getElementById("categorie").value;
-    const imageFile = document.getElementById("input-photo").files[0]; 
+  // Récupérer les valeurs saisies dans le formulaire
+  const title = document.getElementById("title-texte").value;
+  const categoryId = document.getElementById("categorie").value;
+  const imageFile = document.getElementById("input-photo").files[0];
 
-    if (!title.trim()) {
-      alert("Veuillez entrer un titre.");
-      return; // Arrêter l'exécution de la fonction si le titre est vide
+  if (!title.trim()) {
+    aler("Veuillez entrer un titre.");
+    return; // Arrêter l'exécution de la fonction si le titre est vide
   }
-    // Créer un objet FormData pour envoyer les données
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category", categoryId); 
-    formData.append("image", imageFile);
+  // Créer un objet FormData pour envoyer les données
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("category", categoryId);
+  formData.append("image", imageFile);
 
-    // Récupérer le token d'authentification depuis le localStorage
-    const token = localStorage.getItem("token");
+  // Récupérer le token d'authentification depuis le localStorage
+  const token = localStorage.getItem("token");
 
-    // Vérifier si le token est présent
-    if (!token) {
-        alert("Vous devez être connecté.");
-        return; // Arrêter l'exécution de la fonction si le token est absent
+  // Vérifier si le token est présent
+  if (!token) {
+    alert("Vous devez être connecté.");
+    return; // Arrêter l'exécution de la fonction si le token est absent
+  }
+
+  // Créer les en-têtes (headers) de la requête avec le token d'authentification
+  const headers = new Headers();
+  headers.append("Authorization", `Bearer ${token}`);
+
+  try {
+    // Effectue une requêtepour envoyer les données au serveur
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      body: formData,
+      headers: headers
+    });
+
+    if (response.ok) {
+      // Gérer la réponse du serveur si nécessaire
+      console.log("Image ajoutée avec succès !");
+      // Réinitialiser le formulaire 
+      document.getElementById("ajout-form").reset();
+      // Réinitialiser l'aperçu de l'image
+      document.getElementById("image-preview").src = "#";
+      document.getElementById("image-preview").style.display = "none";
+      // Réafficher les éléments masqués
+      document.querySelector('.logoAjout').style.display = "block";
+      document.getElementById('custom-file-upload').style.display = "block";
+      document.querySelector('#modal2 p').style.display = "block";
+    } else {
+      throw new Error("Erreur lors de l'ajout de l'image.");
     }
-
-    // Créer les en-têtes (headers) de la requête avec le token d'authentification
-    const headers = new Headers();
-    headers.append("Authorization", `Bearer ${token}`);
-
-    try {
-        // Effectue une requêtepour envoyer les données au serveur
-        const response = await fetch("http://localhost:5678/api/works", {
-            method: "POST",
-            body: formData,
-            headers: headers 
-        });
-
-        if (response.ok) {
-            // Gérer la réponse du serveur si nécessaire
-            console.log("Image ajoutée avec succès !");
-            // Réinitialiser le formulaire 
-            document.getElementById("ajout-form").reset();
-            // Réinitialiser l'aperçu de l'image
-            document.getElementById("image-preview").src = "#";
-            document.getElementById("image-preview").style.display = "none";
-            // Réafficher les éléments masqués
-            document.querySelector('.logoAjout').style.display = "block";
-            document.getElementById('custom-file-upload').style.display = "block";
-            document.querySelector('#modal2 p').style.display = "block";
-        } else {
-            throw new Error("Erreur lors de l'ajout de l'image.");
-        }
-    } catch (error) {
-        console.error("Erreur:", error);
-        alert("alerte")
-    }
+  } catch (error) {
+    console.error("Erreur:", error);
+    alert("alerte")
+  }
 });

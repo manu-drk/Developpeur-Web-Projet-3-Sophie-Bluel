@@ -15,8 +15,6 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="./script.js"></script>
-	<!-- <script type="module" src="./modale.js" defer></script> -->
-
 
 </head>
 
@@ -50,7 +48,7 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
-		<div class="modalEcran" style="display: none;">
+		<div class="modalEcran">
 			<div id="modal1">
 				<button class="bouton-fermer1"><i class="fa-solid fa-xmark"></i></button>
 				<h1>Galerie photo</h1>
@@ -60,47 +58,15 @@
 				<button id="bouton-ouvrir-modal2" class="bouton-ajouter">Ajouter une photo</button>
 			</div>
 		</div>
-		<div class="modalForm" style="display: none;">
-			<div id="modal2">
-				<button class="bouton-precedent"><i class="fa-solid fa-arrow-left"></i></button>
-				<button class="bouton-fermer2"><i class="fa-solid fa-xmark"></i></button>
-				<h1>Ajout photo</h1>
-				<div id="preview" class="hidden"></div>
-				<div class="fenetre-ajout">
-					<input class="hidden" type="file" id="input-photo" accept="image/jpeg, image/png" name='image' />
-					<div class="logoAjout">
-						<i class="fa-regular fa-image" style="color: #B9C5CC;"></i>
-					</div>
-					<label for="input-photo" id="custom-file-upload">+ Ajouter Photo</label>
-					<p>jpg, png : 4mo max</p>
-					<img id="image-preview" src="#" alt="Aperçu de l'image" style="display: none;">
-				</div>
-				<div id="ajoutModal">
-					<form id='ajout-form' action="#">
-						<label for="title-texte">Titre</label>
-						<input type="text" id="title-texte" name='title' />
-
-						<label for="categorie">Catégorie</label>
-						<select name="category" id="categorie"></select>
-						<hr>
-						<input id="valider-ajout-modal" class="bouton-valider" type="submit" value="Valider">
-					</form>
-				</div>
-
-
-			</div>
-		</div>
+		<div class="modalForm"></div>
 
 		<section id="portfolio">
 			<div id="sectionProjet">
 				<h2>Mes Projets</h2>
 			</div>
-
-			<!-- <div id="filtres"></div> -->
 			<div class="filtres"></div>
-			<div class="gallery">
+			<div class="gallery"></div>
 
-			</div>
 		</section>
 		<section id="contact">
 			<h2>Contact</h2>
@@ -125,6 +91,5 @@
 		</nav>
 	</footer>
 </body>
-<!-- <script type="module" src="./script.js"></script> -->
 
 </html>

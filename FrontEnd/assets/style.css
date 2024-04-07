@@ -120,13 +120,17 @@ ul {
 	text-decoration: none;
 }
 
-#bouton-login, #bouton-login:visited, 
-#bouton-logout, #bouton-logout:visited {
+#bouton-login,
+#bouton-login:visited,
+#bouton-logout,
+#bouton-logout:visited {
 	color: black;
 }
+
 .log {
 	font-weight: 600;
 }
+
 blockquote,
 q {
 	quotes: none;
@@ -139,9 +143,11 @@ q:after {
 	content: '';
 	content: none;
 }
+
 :any-link {
 	color: black;
 }
+
 :-webkit-any-link {
 	color: black;
 
@@ -152,7 +158,6 @@ table {
 	border-spacing: 0;
 }
 
-/** end reset css**/
 body {
 	max-width: 1140px;
 	margin: auto;
@@ -160,13 +165,7 @@ body {
 	font-size: 14px;
 }
 
-/* header {
-	display: flex;
-	justify-content: space-between;
-	margin: 50px 0
-} */
 
-/* ****************************************** */
 #navigation {
 	display: flex;
 	justify-content: space-between;
@@ -190,6 +189,12 @@ body {
 
 }
 
+#topbarLogin button {
+	background-color: white;
+	color: black;
+	width: auto;
+}
+
 .fa-solid,
 .fas {
 	font-weight: 900;
@@ -198,11 +203,7 @@ body {
 }
 
 
-#topbarLogin button {
-	background-color: white;
-	color: black;
-	width: auto;
-}
+
 
 section {
 	margin: 100px 0
@@ -235,16 +236,18 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 
 nav li {
-	padding: 0 10px;
+	padding: 0 20px;
 	font-size: 1.2em;
 }
-
-
-
+nav li img {
+	height: 25px;
+	width: 25px;
+	display: flex;
+	align-items: center;
+}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -257,7 +260,7 @@ nav li {
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 80%;
+	width: 75%;
 }
 
 #introduction article {
@@ -270,6 +273,7 @@ nav li {
 
 #introduction p {
 	margin-bottom: 0.5em;
+	width: 400px;
 }
 
 #portfolio h2 {
@@ -293,7 +297,6 @@ nav li {
 	border: solid 1px #1D6154;
 	width: auto;
 	padding: 7px 16px;
-	/* margin-right: 10px;  */
 	margin-top: 10px;
 	margin-bottom: 51px;
 	font-family: 'Syne';
@@ -309,6 +312,11 @@ nav li {
 	background-color: #1D6154;
 	border: solid 1px #1D6154;
 
+}
+.boutonFiltre.selected {
+	color: white;
+	background-color: #1D6154;
+	border: solid 1px #1D6154;
 
 }
 
@@ -338,7 +346,6 @@ nav li {
 
 .gallery img {
 	width: 100%;
-
 }
 
 #sectionProjet {
@@ -359,9 +366,7 @@ nav li {
 }
 
 
-
-
-/* *************************** Modal1 *************************** */
+/**********      Modale 1      **********/
 
 
 .modalEcran {
@@ -382,15 +387,11 @@ nav li {
 	flex-direction: column;
 	justify-content: center;
 	overflow: auto;
-	/* width: 600px;
-	height: 700px; */
 	width: 630px;
 	height: 690px;
-	/* padding: 20px 50px; */
 	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 	position: relative;
-	/* transform: translate(-50%, -50%); */
 }
 
 #modal1 .bouton-fermer1 {
@@ -408,14 +409,12 @@ nav li {
 }
 
 #modal1 .bouton-fermer1 i {
-
 	height: 25px;
 	width: 25px;
 
 }
 
 #modal1 .bouton-fermer1:hover {
-
 	transform: scale(1.30);
 
 }
@@ -429,7 +428,6 @@ nav li {
 	align-items: center;
 	justify-content: center;
 	margin-top: 50px;
-	/* margin: 30px auto; */
 }
 
 
@@ -487,6 +485,7 @@ nav li {
 	align-items: center;
 	border-radius: 5px;
 }
+
 #bouton-supprimer i {
 	display: flex;
 	align-items: center;
@@ -494,7 +493,7 @@ nav li {
 	height: 7px;
 	width: 7px;
 	margin: 0px 0px;
-	
+
 }
 
 #galleryModal figure .boutons-modal i {
@@ -506,11 +505,8 @@ nav li {
 #modal1 hr {
 	width: 70%;
 	color: #b3b3b3;
-	/* height: 1.2px; */
 	size: 1.2px;
 	margin-top: 47px;
-	/*margin-bottom: 32px; */
-	/* margin: 35px 35px; */
 }
 
 #modal1 .bouton-ajouter {
@@ -528,7 +524,7 @@ nav li {
 }
 
 
-/*************************** Modale 2 ***************************/
+/**********      Modale 2      **********/
 
 .modalForm {
 	display: none;
@@ -554,7 +550,8 @@ nav li {
 	border-radius: 10px;
 	position: relative;
 }
-#modal2 .bouton-precedent{
+
+#modal2 .bouton-precedent {
 	color: black;
 	display: flex;
 	justify-content: center;
@@ -567,16 +564,14 @@ nav li {
 	border: none;
 	background: white;
 }
-#modal2 .bouton-precedent i {
 
+#modal2 .bouton-precedent i {
 	height: 25px;
 	width: 25px;
-
 }
+
 #modal2 .bouton-precedent:hover {
-
 	transform: scale(1.30);
-
 }
 
 #modal2 .bouton-fermer2 {
@@ -594,15 +589,12 @@ nav li {
 }
 
 #modal2 .bouton-fermer2 i {
-
 	height: 25px;
 	width: 25px;
-
 }
+
 #modal2 .bouton-fermer2:hover {
-
 	transform: scale(1.30);
-
 }
 
 #modal2 h1 {
@@ -611,7 +603,9 @@ nav li {
 	font-size: 26px;
 	color: black;
 	justify-content: center;
-	margin: 30px auto;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .hidden {
@@ -621,16 +615,14 @@ nav li {
 .fenetre-ajout {
 	height: 170px;
 	width: 420px;
-	margin: 50px auto;
-	margin-top: 20px;
+	margin: 50px auto;	
 	background-color: #e8f1f7;
 	justify-content: center;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	border-radius: 3px;
-	/* padding: 50px 160px; */
-}
+	border-radius: 3px;	
+	}
 
 #modal2 .logoAjout i {
 	font-size: 76px;
@@ -655,11 +647,13 @@ label[for="input-photo"] {
 	margin-top: 10px;
 	font-size: 10px;
 }
+
 #image-preview {
 	height: 100px;
 	width: 80px;
 
 }
+
 #modal2 .bouton-valider {
 	font-family: 'Syne';
 	font-weight: 700;
@@ -673,20 +667,28 @@ label[for="input-photo"] {
 	border-radius: 60px;
 	border: none;
 }
-.valide { 
+
+.valide {
 	background-color: #1D6154 !important;
 }
-
+label[for="title-texte"] {
+	font-family: 'Work Sans';
+	font-weight: 500;
+	font-size: 14px;
+  }
 #ajout-form {
 	width: 420px;
 	margin: auto;
+	font-weight: 500;
+
 }
 
 #title-texte,
 #categorie {
 	height: 50px;
 	margin: 10px 0px;
-	font-size: 1.2em;
+	font-size: 14px;
+	font-weight: 400;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -713,10 +715,12 @@ label[for="input-photo"] {
 	width: 50%;
 	margin: auto;
 }
+
 #connexion {
 	padding-top: 100px;
 	padding-bottom: 180px;
 }
+
 #contact>*,
 #connexion>* {
 	text-align: center;
