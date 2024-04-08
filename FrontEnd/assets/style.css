@@ -163,6 +163,7 @@ body {
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
+	background-color: #fffef9;
 }
 
 
@@ -242,12 +243,14 @@ nav li {
 	padding: 0 20px;
 	font-size: 1.2em;
 }
+
 nav li img {
 	height: 25px;
 	width: 25px;
 	display: flex;
 	align-items: center;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -313,6 +316,7 @@ nav li img {
 	border: solid 1px #1D6154;
 
 }
+
 .boutonFiltre.selected {
 	color: white;
 	background-color: #1D6154;
@@ -505,7 +509,6 @@ nav li img {
 #modal1 hr {
 	width: 70%;
 	color: #b3b3b3;
-	size: 1.2px;
 	margin-top: 47px;
 }
 
@@ -541,11 +544,9 @@ nav li img {
 #modal2 {
 	display: flex;
 	flex-direction: column;
-	/* justify-content: center; */
 	overflow: auto;
 	width: 630px;
 	height: 690px;
-	/* padding: 20px 50px; */
 	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 	position: relative;
@@ -615,14 +616,14 @@ nav li img {
 .fenetre-ajout {
 	height: 170px;
 	width: 420px;
-	margin: 50px auto;	
+	margin: 50px auto;
 	background-color: #e8f1f7;
 	justify-content: center;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	border-radius: 3px;	
-	}
+	border-radius: 3px;
+}
 
 #modal2 .logoAjout i {
 	font-size: 76px;
@@ -671,11 +672,13 @@ label[for="input-photo"] {
 .valide {
 	background-color: #1D6154 !important;
 }
+
 label[for="title-texte"] {
 	font-family: 'Work Sans';
 	font-weight: 500;
 	font-size: 14px;
-  }
+}
+
 #ajout-form {
 	width: 420px;
 	margin: auto;
@@ -703,9 +706,8 @@ label[for="title-texte"] {
 #modal2 hr {
 	width: 100%;
 	color: #b3b3b3;
-	size: 1.2px;
 	margin-top: 47px;
-	margin-bottom: 32px;
+	margin-bottom: 37px;
 
 }
 
@@ -738,6 +740,11 @@ label[for="title-texte"] {
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
+}
+
+#connexion form {
+	width: 380px;
+	margin: 0 auto;
 }
 
 #contact input,
