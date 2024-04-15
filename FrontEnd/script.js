@@ -16,7 +16,7 @@ categories = await response.json();
 // ne pas avoir d'affichage en double
 const categoriesSet = new Set();
 
-
+// ajouter les projets
 
 const displayWorks = (filtered = []) => {
   let tabImg = filtered?.length ? filtered : works;
@@ -27,8 +27,7 @@ const displayWorks = (filtered = []) => {
         <figure data-id="${work.categoryId}">
         <img src="${work.imageUrl}" alt="${work.title}">
         <figcaption>${work.title}</figcaption>
-        </figure>
-    
+        </figure>    
         `;
   }).join('')
   gallery.innerHTML = galleryWorks
@@ -46,7 +45,6 @@ categories.unshift(tousLesTavaux);
 if (!token) {
   categories.forEach(function (categorie) {
 
-
     let button = document.createElement('button');
     button.classList.add('boutonFiltre');
     button.textContent = categorie.name;
@@ -55,6 +53,8 @@ if (!token) {
 
   })
 
+// Sélection par défaut du bouton "Tous"
+document.querySelector('.boutonFiltre[data-id="0"]').classList.add('selected');
 
   //**********      Ajout de la partie filtre      **********
 
